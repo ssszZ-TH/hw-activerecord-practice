@@ -20,14 +20,20 @@ class Customer < ActiveRecord::Base
     # YOUR CODE HERE to return all customer(s) whose first name is Candice
     # probably something like:  Customer.where(....)
     return Customer.where(first:"Candice")## select * from where
+    ## คือการ show user ทุกคนที่ชื่อหน้า = Candice
   end
   def self.with_valid_email
     # YOUR CODE HERE to return only customers with valid email addresses (containing '@')
     return Customer.where("email like '%@%'")
+    ## ่ select * from Customer where email like "%@%"
+    ## เเต่ถ้าเป็น where true มันก็คือการ injection เเต่ ruby เเม่งเทพจริงมีการป้องกันด้วย
+    ## เเสดง user ทุกคน ที่ email มี @ อยู่ในนั้น
   end
   # etc. - see README.md for more details
   def self.with_dot_org_email
     Customer.where("email like '%.org'")
+    ##ขี้เกียจเขียน sql ละ active record สั้นกว่าเยอะ
+    ## เเสดง user ทุกตัวที่ email จบด้วย .org
   end
 
   def self.with_invalid_email
