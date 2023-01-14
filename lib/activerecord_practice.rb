@@ -38,6 +38,7 @@ class Customer < ActiveRecord::Base
 
   def self.with_invalid_email
     Customer.where.not("email like '%@%'")
+    ## เเสดง ทุกตัวที่ email ไม่มี @
   end
 
   def self.with_blank_email
