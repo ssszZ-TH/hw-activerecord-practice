@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.6'
+#ruby '2.6.6' #ลงไม่ได้เลยจริงๆ
 
 gem 'activerecord', '~> 6'
 gem 'byebug'
