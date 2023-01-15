@@ -32,7 +32,7 @@ class Customer < ActiveRecord::Base
   # etc. - see README.md for more details
   def self.with_dot_org_email
     Customer.where("email like '%.org'")
-    ##ขี้เกียจเขียน sql ละ active record สั้นกว่าเยอะ
+    ##ขี้เกียจเขียน sql ละ active record สั้นกว่าเยอะ เเล้ว มหาลัยก็ยังไม่ได้สอน sql
     ## เเสดง user ทุกตัวที่ email จบด้วย .org
   end
 
@@ -43,30 +43,38 @@ class Customer < ActiveRecord::Base
 
   def self.with_blank_email
     Customer.where("email is null")
+    ## เเสดงตัวที่ email ว่างปล่าว
   end
 
   def self.born_before_1980
     Customer.where("birthdate < '1980-01-01'")
+    ## เเสดงคนที่เกิดก่อน 1980-01-01
   end
 
   def self.with_valid_email_and_born_before_1980
     Customer.where("email like '%@%' and birthdate < '1980-01-01'")
+    ## เเสดงคนท่เกิดหลัง 1980-01-01
   end
 
   def self.last_names_starting_with_b
     Customer.where("last like 'B%'").order("birthdate")
+    ## เเสดง customer ที่ชื่อหลังขึ้นต้นด้วย B เเสดงเเบบเรียงตามวันเกิด
   end
 
   def self.twenty_youngest
     Customer.order("birthdate DESC").limit(20)
+    ## เเสดง customer เรียงตามวันเกิดเเบบ descending 20 คน
+    ## พูดเป็นภาษาคน เเสดงคนที่เด็กสุด 20 คน
   end
 
   def self.update_gussie_murray_birthdate
     Customer.find_by(first: 'Gussie').update(birthdate: '2004-02-08')
+    ## หาคนที่ชื่อหน้าคือ gussie เเล้วเเก้ใขวันเกิดเป็น bla bla bla ว่าไป
   end
 
   def self.change_all_invalid_emails_to_blank
     Customer.where("email != '' AND email IS NOT NULL and email NOT LIKE '%@%'").update_all "email = ''"
+    
   end
 
   def self.delete_meggie_herman
@@ -76,4 +84,15 @@ class Customer < ActiveRecord::Base
   def self.delete_everyone_born_before_1978
     Customer.where('birthdate < ?', Time.parse("1 January 1978")).destroy_all
   end
+
+  def self.to_arr
+    ls = []
+    Customer.all.order('id').each{|x| ls.append(x) }
+    return ls
+  end
+
 end
+
+Customer.itself.with_invalid_email.each{|x| puts x}
+print Customer.itself.to_arr ##ทดลองใช้ method เล่นๆ 
+puts Customer.itself.twenty_youngest
