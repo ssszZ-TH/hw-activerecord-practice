@@ -11,6 +11,8 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 class Customer < ActiveRecord::Base
   def to_s
     "  [#{id}] #{first} #{last}, <#{email}>, #{birthdate.strftime('%Y-%m-%d')}"
+    ## ทุกครั้งที่จะมีการใช้ puts มันจะทำการ convert to string โดยอัตโนมัติ
+    ## ่ 
   end
 
   #  NOTE: Every one of these can be solved entirely by ActiveRecord calls.
@@ -74,21 +76,25 @@ class Customer < ActiveRecord::Base
 
   def self.change_all_invalid_emails_to_blank
     Customer.where("email != '' AND email IS NOT NULL and email NOT LIKE '%@%'").update_all "email = ''"
-    
+    ## update email ผิดๆ ให้เป็นค่าว่าง
   end
 
   def self.delete_meggie_herman
     Customer.find_by(:first => 'Meggie', :last => 'Herman').destroy
+    ## ลบคนที่ชื่อ maggie herman ออกจาก database
   end
 
   def self.delete_everyone_born_before_1978
     Customer.where('birthdate < ?', Time.parse("1 January 1978")).destroy_all
+    ## ลบทุกคนที่เกิดก่อน 1 January 1978 โดย ที่ valid form ของ sql ต้องทำเป็น 'yyyy-mm-dd'
+    ## Time.parse คือตัวช่วย convert 1 January 1978 -> '1978-01-01'
   end
 
   def self.to_arr
     ls = []
     Customer.all.order('id').each{|x| ls.append(x) }
     return ls
+    ## สร้างเองเล่นๆ เป็นการ get customer ทุกคนมาใส่ใน array เเล้ว return ส่ง ls กลับ
   end
 
 end
