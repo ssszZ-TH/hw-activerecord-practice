@@ -21,8 +21,11 @@ class Customer < ActiveRecord::Base
   def self.any_candice
     # YOUR CODE HERE to return all customer(s) whose first name is Candice
     # probably something like:  Customer.where(....)
-    return Customer.where(first:"Candice")## select * from where
+    return Customer.where(first:"Candice")## select * from customer where
     ## คือการ show user ทุกคนที่ชื่อหน้า = Candice
+    # ('first' => 'candice') 
+    # :first => 'candice'
+    # first: "Candice"
   end
   def self.with_valid_email
     # YOUR CODE HERE to return only customers with valid email addresses (containing '@')
@@ -99,6 +102,8 @@ class Customer < ActiveRecord::Base
 
 end
 
-Customer.itself.with_invalid_email.each{|x| puts x}
-print Customer.itself.to_arr ##ทดลองใช้ method เล่นๆ 
-puts Customer.itself.twenty_youngest
+#Customer.itself.with_invalid_email.each{|x| puts x}
+#print Customer.itself.to_arr ##ทดลองใช้ method เล่นๆ 
+#puts Customer.itself.twenty_youngest
+puts Customer.all.order('first')
+#SELECT * FROM Custeomer ORDER BY 'first' ;
